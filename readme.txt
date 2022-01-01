@@ -2,7 +2,7 @@ To commit the file to github
 
 Step 1 - git init             (if needed)
 
-Step 2- git add filename
+Step 2- git add .
 
 Step 3 - git commit -m "enter anything"
 
