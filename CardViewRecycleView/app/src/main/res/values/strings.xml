@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">CardViewRecycleView</string>
+    <string name="author_placeholder">Author placeholder</string>
+    <string name="titel_placeholder">Titel Placeholder</string>
+    <string name="cover">cover</string>
+</resources>
