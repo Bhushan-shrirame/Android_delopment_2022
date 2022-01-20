@@ -3,7 +3,6 @@ package com.bhushanshrirame.webview;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         webview.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
         webview.loadUrl(websiteURL);
         webview.setWebViewClient(new WebViewClientDemo());
-
     }
 
     private class WebViewClientDemo extends WebViewClient {
