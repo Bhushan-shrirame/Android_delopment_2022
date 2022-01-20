@@ -1,43 +1,5 @@
 package com.bhushanshrirame.braintumordetection;
 
-//import android.os.Bundle;
-//import android.webkit.WebView;
-//import android.webkit.WebViewClient;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//
-//public class MainActivity extends AppCompatActivity {
-//
-//    String websiteURL = "http://192.168.29.156:5000/"; // sets web url
-////    String websiteURL = "https://smallpdf.com/jpg-to-pdf"; //
-//    private WebView webview;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        //Webview stuff
-//        webview = findViewById(R.id.webView);
-//        webview.getSettings().setJavaScriptEnabled(true);
-//        webview.getSettings().setDomStorageEnabled(true);
-//        webview.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
-//        webview.loadUrl(websiteURL);
-//        webview.setWebViewClient(new WebViewClientDemo());
-//
-//    }
-//
-//    private class WebViewClientDemo extends WebViewClient {
-//        @Override
-//        //Keep webview in app when clicking links
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadUrl(url);
-//            return true;
-//        }
-//    }
-//
-//}
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -45,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
@@ -71,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public ValueCallback<Uri[]> uploadMessage;
     public static final int REQUEST_SELECT_FILE = 100;
     private final static int FILECHOOSER_RESULTCODE = 1;
-    
+
 //    public String url ="https://smallpdf.com/jpg-to-pdf";
       public String url ="http://192.168.29.156:5000/";
 
@@ -80,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         webView = (WebView) findViewById(R.id.webView);

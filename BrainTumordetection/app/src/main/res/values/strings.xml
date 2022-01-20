@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BrainTumordetection</string>
+    <string name="aboutus">This project is done by\n1.Bhushan shrirame \n2.Mihir yardi\n3.Swaraj Kothekar\n4.Prasad Gore \nUnder the guidance of \n Prof. Nitin Borse</string>
 </resources>
