@@ -87,7 +87,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
 
     //material Components
-    implementation 'com.google.android.material:material:1.6.0-alpha01'
+    implementation 'com.google.android.material:material:1.6.0-alpha02'
 
     //color picker library
     implementation 'com.thebluealliance:spectrum:0.7.1'
