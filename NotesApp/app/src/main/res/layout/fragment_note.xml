@@ -141,7 +141,8 @@
                 app:fabsize="normal"
                 app:tint="@color/white"
                 app:useCompatPadding="false"
-                tools:ignore="SpeakableTextPresentCheck">
+                tools:ignore="SpeakableTextPresentCheck"
+                app:layout_anchor="@id/rvNote">
 
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 

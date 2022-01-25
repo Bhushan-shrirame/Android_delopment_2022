@@ -6,7 +6,10 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -22,6 +25,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +39,7 @@ class SaveOrDeleteFragment : Fragment(R.layout.fragment_save_or_delete) {
     private var color=-1
     private val noteActivityViewModel: NoteActivityViewModel by activityViewModels()
     private val currentDate = SimpleDateFormat.getInstance().format(Date())
+    private lateinit var result:String
     private val job = CoroutineScope(Dispatchers.Main)
     private val args: SaveOrDeleteFragmentArgs by navArgs()
 
@@ -57,12 +63,18 @@ class SaveOrDeleteFragment : Fragment(R.layout.fragment_save_or_delete) {
         navController = Navigation.findNavController(view)
         val activity = activity as MainActivity
 
+        ViewCompat.setTransitionName(
+            contentBinding.noteContentFragmentParent,
+            "recylerView_${args.note?.id}"
+        )
+
         contentBinding.backBtn.setOnClickListener {
             requireView().hideKeyBoard()
             navController.popBackStack()
         }
+
         contentBinding.saveNote.setOnClickListener {
-            savNote()
+            saveNote()
 
         }
         try {
@@ -117,9 +129,43 @@ class SaveOrDeleteFragment : Fragment(R.layout.fragment_save_or_delete) {
              }
          }
 
+        // opens with existing note item
+        setUpNote()
+
     }
 
-    private fun savNote() {
+    private fun setUpNote() {
+        val note = args.note
+        val title = contentBinding.erTitle
+        val content = contentBinding.etNoteContent
+        val lastEdited = contentBinding.lastEdited
+
+        if(note==null)
+        {
+            contentBinding.lastEdited.text = getString(R.string.edited_on,SimpleDateFormat.getDateInstance().format(Date()))
+
+        }
+        if (note!=null)
+        {
+            title.setText(note.title)
+            content.renderMD(note.content)
+            lastEdited.text=getString(R.string.edited_on,note.date)
+            color=note.color
+            contentBinding.apply {
+                job.launch {
+                    delay(10)
+                    noteContentFragmentParent.setBackgroundColor(color)
+
+                }
+                toolbarFragmentNoteContent.setBackgroundColor(color)
+                bottomBar.setBackgroundColor(color)
+            }
+            activity?.window?.statusBarColor=note.color
+        }
+
+    }
+
+    private fun saveNote() {
         if (contentBinding.etNoteContent.text.toString().isEmpty() ||
                 contentBinding.erTitle.text.toString().isEmpty())
         {
@@ -140,15 +186,39 @@ class SaveOrDeleteFragment : Fragment(R.layout.fragment_save_or_delete) {
 
                         )
                     )
+
+                    result = "Note Saved"
+                    setFragmentResult(
+                        "key",
+                        bundleOf("bundleKey" to result)
+                    )
+
                     navController.navigate(SaveOrDeleteFragmentDirections.actionSaveOrDeleteFragmentToNoteFragment2())
                 }
                 else ->
                 {
                     //update note
+                    updatenote()
+                    navController.popBackStack()
                 }
 
             }
 
+        }
+    }
+
+    private fun updatenote() {
+        if (note!=null)
+        {
+            noteActivityViewModel.updateNote(
+                Note(
+                    note!!.id,
+                    contentBinding.erTitle.text.toString(),
+                    contentBinding.etNoteContent.getMD(),
+                    currentDate,
+                    color
+                )
+            )
         }
     }
 
