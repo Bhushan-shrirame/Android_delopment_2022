@@ -40,7 +40,9 @@
                         android:textSize="30sp"
                         android:textColor="@color/black"
                         android:layout_marginTop="15dp"
-                        android:layout_marginStart="2dp"></com.google.android.material.textview.MaterialTextView>
+                        android:layout_marginStart="2dp">
+
+                    </com.google.android.material.textview.MaterialTextView>
 
 
                     <LinearLayout
@@ -142,8 +144,8 @@
                 app:tint="@color/white"
                 app:useCompatPadding="false"
                 tools:ignore="SpeakableTextPresentCheck"
-                app:layout_anchor="@id/rvNote">
-
+                android:contentDescription="@string/todo"
+                >
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
             <TextView
